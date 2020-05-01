@@ -6,10 +6,8 @@
 using namespace vr;
 
 
-static double cpX = 0, cpY = 0, cpZ = 0;
-static double cqW = 0, cqX = 0, cqY = 0, cqZ = 0;
-static double c2pX = 0, c2pY = 0, c2pZ = 0;
-static double c2qW = 0, c2qX = 0, c2qY = 0, c2qZ = 0;
+static double cpX[10], cpY[10], cpZ[10];
+static double cqW[10], cqX[10], cqY[10], cqZ[10];
 
 CSampleControllerDriver::CSampleControllerDriver()
 {
@@ -65,10 +63,10 @@ vr::EVRInitError CSampleControllerDriver::Activate(vr::TrackedDeviceIndex_t unOb
     // even though we won't ever track we want to pretend to be the right hand so binding will work as expected
 
     switch (ControllerIndex) {
-    case 1:
+    case 0:
         vr::VRProperties()->SetInt32Property(m_ulPropertyContainer, Prop_ControllerRoleHint_Int32, TrackedControllerRole_LeftHand);
         break;
-    case 2:
+	default:
         vr::VRProperties()->SetInt32Property(m_ulPropertyContainer, Prop_ControllerRoleHint_Int32, TrackedControllerRole_RightHand);
         break;
     }
@@ -143,27 +141,14 @@ DriverPose_t CSampleControllerDriver::GetPose()
     pose.qWorldFromDriverRotation = HmdQuaternion_Init(1, 0, 0, 0);
     pose.qDriverFromHeadRotation = HmdQuaternion_Init(1, 0, 0, 0);
 
-    if (ControllerIndex == 1) {
-      
-        pose.vecPosition[0] = cpX;
-        pose.vecPosition[1] = cpY;
-        pose.vecPosition[2] = cpZ;
+	pose.vecPosition[0] = cpX[ControllerIndex];
+	pose.vecPosition[1] = cpY[ControllerIndex];
+	pose.vecPosition[2] = cpZ[ControllerIndex];
 
-		pose.qRotation.w = cqW;
-		pose.qRotation.x = cqX;
-		pose.qRotation.y = cqY;
-		pose.qRotation.z = cqZ;
-    } else {
-        //Controller2
-        pose.vecPosition[0] = c2pX;
-        pose.vecPosition[1] = c2pY;
-        pose.vecPosition[2] = c2pZ;
-
-		pose.qRotation.w = c2qW;
-		pose.qRotation.x = c2qX;
-		pose.qRotation.y = c2qY;
-		pose.qRotation.z = c2qZ;
-    }
+	pose.qRotation.w = cqW[ControllerIndex];
+	pose.qRotation.x = cqX[ControllerIndex];
+	pose.qRotation.y = cqY[ControllerIndex];
+	pose.qRotation.z = cqZ[ControllerIndex];
 
     return pose;
 }
@@ -197,12 +182,36 @@ void CSampleControllerDriver::ProcessEvent(const vr::VREvent_t &vrEvent)
 std::string CSampleControllerDriver::GetSerialNumber() const
 {
     switch (ControllerIndex) {
+	case 0:
+		return "CTRL0Serial";
+		break;
     case 1:
         return "CTRL1Serial";
         break;
     case 2:
         return "CTRL2Serial";
         break;
+	case 3:
+		return "CTRL3Serial";
+		break;
+	case 4:
+		return "CTRL4Serial";
+		break;
+	case 5:
+		return "CTRL5Serial";
+		break;
+	case 6:
+		return "CTRL6Serial";
+		break;
+	case 7:
+		return "CTRL7Serial";
+		break;
+	case 8:
+		return "CTRL8Serial";
+		break;
+	case 9:
+		return "CTRL9Serial";
+		break;
     }
 }
 

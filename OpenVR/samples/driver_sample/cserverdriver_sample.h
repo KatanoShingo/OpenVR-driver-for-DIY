@@ -20,9 +20,8 @@ public:
     virtual void LeaveStandby()  {}
 
 private:
-    CSampleDeviceDriver *m_pNullHmdLatest = nullptr;
-    CSampleControllerDriver *m_pController = nullptr;
-    CSampleControllerDriver *m_pController2 = nullptr;
+	CSampleControllerDriver *m_pController[10];
+	int m_pControllers = 3;
 };
 
 #endif // CSERVERDRIVER_SAMPLE_H

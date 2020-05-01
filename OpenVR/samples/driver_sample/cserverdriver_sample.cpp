@@ -6,37 +6,33 @@ EVRInitError CServerDriver_Sample::Init(vr::IVRDriverContext *pDriverContext)
 {
     VR_INIT_SERVER_DRIVER_CONTEXT(pDriverContext);
     //InitDriverLog( vr::VRDriverLog() );
-
-    m_pController = new CSampleControllerDriver();
-    m_pController->SetControllerIndex(1);
-    vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController->GetSerialNumber().c_str(), vr::TrackedDeviceClass_GenericTracker, m_pController);
-
-    m_pController2 = new CSampleControllerDriver();
-    m_pController2->SetControllerIndex(2);
-    vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController2->GetSerialNumber().c_str(), vr::TrackedDeviceClass_GenericTracker, m_pController2);
-
+	for (int i = 0; i < m_pControllers; i++)
+	{
+		m_pController[i] = new CSampleControllerDriver();
+		m_pController[i]->SetControllerIndex(i);
+		vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController[i]->GetSerialNumber().c_str(), vr::TrackedDeviceClass_GenericTracker, m_pController[i]);
+	}
     return VRInitError_None;
 }
 
 void CServerDriver_Sample::Cleanup()
 {
     //CleanupDriverLog();
-
-    delete m_pController;
-    m_pController = NULL;
-    delete m_pController2;
-    m_pController2 = NULL;
+	for (int i = 0; i < m_pControllers; i++)
+	{
+		delete m_pController[i];
+		m_pController[i] = NULL;
+	}
 }
 
 void CServerDriver_Sample::RunFrame()
 {
-    if (m_pController) {
-        m_pController->RunFrame();
-    }
-    if (m_pController2) {
-        m_pController2->RunFrame();
-    }
-
+	for (int i = 0; i < m_pControllers; i++)
+	{
+		if (m_pController[i]) {
+			m_pController[i]->RunFrame();
+		}
+	}
 #if 0
     vr::VREvent_t vrEvent;
     while ( vr::VRServerDriverHost()->PollNextEvent( &vrEvent, sizeof( vrEvent ) ) )

@@ -9,11 +9,11 @@ EVRInitError CServerDriver_Sample::Init(vr::IVRDriverContext *pDriverContext)
 
     m_pController = new CSampleControllerDriver();
     m_pController->SetControllerIndex(1);
-    vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController->GetSerialNumber().c_str(), vr::TrackedDeviceClass_Controller, m_pController);
+    vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController->GetSerialNumber().c_str(), vr::TrackedDeviceClass_GenericTracker, m_pController);
 
     m_pController2 = new CSampleControllerDriver();
     m_pController2->SetControllerIndex(2);
-    vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController2->GetSerialNumber().c_str(), vr::TrackedDeviceClass_Controller, m_pController2);
+    vr::VRServerDriverHost()->TrackedDeviceAdded(m_pController2->GetSerialNumber().c_str(), vr::TrackedDeviceClass_GenericTracker, m_pController2);
 
     return VRInitError_None;
 }

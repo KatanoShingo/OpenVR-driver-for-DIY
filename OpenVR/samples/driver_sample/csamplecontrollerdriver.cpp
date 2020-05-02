@@ -52,53 +52,53 @@ vr::EVRInitError CSampleControllerDriver::Activate(vr::TrackedDeviceIndex_t unOb
     vr::VRProperties()->SetUint64Property(m_ulPropertyContainer, vr::Prop_SupportedButtons_Uint64, supportedButtons);
 
     // return a constant that's not 0 (invalid) or 1 (reserved for Oculus)
-    //vr::VRProperties()->SetUint64Property( m_ulPropertyContainer, Prop_CurrentUniverseId_Uint64, 2 );
+    vr::VRProperties()->SetUint64Property( m_ulPropertyContainer, Prop_CurrentUniverseId_Uint64, 2 );
 
     // avoid "not fullscreen" warnings from vrmonitor
-    //vr::VRProperties()->SetBoolProperty( m_ulPropertyContainer, Prop_IsOnDesktop_Bool, false );
+    vr::VRProperties()->SetBoolProperty( m_ulPropertyContainer, Prop_IsOnDesktop_Bool, false );
 
     // our sample device isn't actually tracked, so set this property to avoid having the icon blink in the status window
-    //vr::VRProperties()->SetBoolProperty( m_ulPropertyContainer, Prop_NeverTracked_Bool, false );
+    vr::VRProperties()->SetBoolProperty( m_ulPropertyContainer, Prop_NeverTracked_Bool, true );
 
     // even though we won't ever track we want to pretend to be the right hand so binding will work as expected
 
-    switch (ControllerIndex) {
+ /*   switch (ControllerIndex) {
     case 0:
         vr::VRProperties()->SetInt32Property(m_ulPropertyContainer, Prop_ControllerRoleHint_Int32, TrackedControllerRole_LeftHand);
         break;
 	default:
         vr::VRProperties()->SetInt32Property(m_ulPropertyContainer, Prop_ControllerRoleHint_Int32, TrackedControllerRole_RightHand);
         break;
-    }
+    }*/
 
     // this file tells the UI what to show the user for binding this controller as well as what default bindings should
     // be for legacy or other apps
-    vr::VRProperties()->SetStringProperty(m_ulPropertyContainer, Prop_InputProfilePath_String, "{null}/input/mycontroller_profile.json");
+    //vr::VRProperties()->SetStringProperty(m_ulPropertyContainer, Prop_InputProfilePath_String, "{null}/input/mycontroller_profile.json");
 
-    //  Buttons handles
-    vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/application_menu/click", &HButtons[0]);
-    vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/grip/click", &HButtons[1]);
-    vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/system/click", &HButtons[2]);
-    vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/trackpad/click", &HButtons[3]);
+    ////  Buttons handles
+    //vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/application_menu/click", &HButtons[0]);
+    //vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/grip/click", &HButtons[1]);
+    //vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/system/click", &HButtons[2]);
+    //vr::VRDriverInput()->CreateBooleanComponent(m_ulPropertyContainer, "/input/trackpad/click", &HButtons[3]);
 
-    // Analog handles
-    vr::VRDriverInput()->CreateScalarComponent(
-                m_ulPropertyContainer, "/input/trackpad/x", &HAnalog[0],
-            vr::EVRScalarType::VRScalarType_Absolute, vr::EVRScalarUnits::VRScalarUnits_NormalizedTwoSided
-            );
-    vr::VRDriverInput()->CreateScalarComponent(
-                m_ulPropertyContainer, "/input/trackpad/y", &HAnalog[1],
-            vr::EVRScalarType::VRScalarType_Absolute, vr::EVRScalarUnits::VRScalarUnits_NormalizedTwoSided
-            );
-    vr::VRDriverInput()->CreateScalarComponent(
-                m_ulPropertyContainer, "/input/trigger/value", &HAnalog[2],
-            vr::EVRScalarType::VRScalarType_Absolute, vr::EVRScalarUnits::VRScalarUnits_NormalizedOneSided
-            );
+    //// Analog handles
+    //vr::VRDriverInput()->CreateScalarComponent(
+    //            m_ulPropertyContainer, "/input/trackpad/x", &HAnalog[0],
+    //        vr::EVRScalarType::VRScalarType_Absolute, vr::EVRScalarUnits::VRScalarUnits_NormalizedTwoSided
+    //        );
+    //vr::VRDriverInput()->CreateScalarComponent(
+    //            m_ulPropertyContainer, "/input/trackpad/y", &HAnalog[1],
+    //        vr::EVRScalarType::VRScalarType_Absolute, vr::EVRScalarUnits::VRScalarUnits_NormalizedTwoSided
+    //        );
+    //vr::VRDriverInput()->CreateScalarComponent(
+    //            m_ulPropertyContainer, "/input/trigger/value", &HAnalog[2],
+    //        vr::EVRScalarType::VRScalarType_Absolute, vr::EVRScalarUnits::VRScalarUnits_NormalizedOneSided
+    //        );
 
-    vr::VRProperties()->SetInt32Property(m_ulPropertyContainer, vr::Prop_Axis0Type_Int32, vr::k_eControllerAxis_TrackPad);
+    //vr::VRProperties()->SetInt32Property(m_ulPropertyContainer, vr::Prop_Axis0Type_Int32, vr::k_eControllerAxis_TrackPad);
 
-    // create our haptic component
-    vr::VRDriverInput()->CreateHapticComponent(m_ulPropertyContainer, "/output/haptic", &m_compHaptic);
+    //// create our haptic component
+    //vr::VRDriverInput()->CreateHapticComponent(m_ulPropertyContainer, "/output/haptic", &m_compHaptic);
 
     return VRInitError_None;
 }

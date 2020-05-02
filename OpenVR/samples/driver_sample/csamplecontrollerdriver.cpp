@@ -9,6 +9,22 @@ using namespace vr;
 static double cpX[10], cpY[10], cpZ[10];
 static double cqW[10], cqX[10], cqY[10], cqZ[10];
 
+
+extern "C" __declspec(dllexport) void PositionUpdate( double posX, double posY, double posZ, int deviceId)
+{
+	cpX[deviceId] = posX;
+	cpY[deviceId] = posY;
+	cpZ[deviceId] = posZ;
+}
+
+extern "C" __declspec(dllexport) void RotationUpdate(double rotW, double rotX, double rotY, double rotZ, int deviceId)
+{
+	cqW[deviceId] = rotW;
+	cqX[deviceId] = rotX;
+	cqY[deviceId] = rotY;
+	cqZ[deviceId] = rotZ;
+}
+
 CSampleControllerDriver::CSampleControllerDriver()
 {
     m_unObjectId = vr::k_unTrackedDeviceIndexInvalid;
